@@ -217,14 +217,14 @@ object hw10 extends js.util.JsApp {
     
     e match {
       // EvalVal
-      case v: Val => State.insert[Mem,Val](v)
+      case v: Val => State insert[Mem,Val] v
       
       // EvalPrint
       case Print(e) => 
         for {
           v <- eval(e)
         } yield {
-          println(v.prettyVal()); 
+          println(v.prettyVal()) 
           Undefined
         }
         
@@ -293,7 +293,7 @@ object hw10 extends js.util.JsApp {
       case BinOp(Assign, UnOp(Deref, a: Addr), e2) =>
         for {
           v2 <- eval(e2)
-          _ <- State write[Mem]( mp => mp + (a -> v2) )
+          _ <- State write[Mem] { mp => mp + (a -> v2) }
         } yield v2
         
       // EvalEqual, EvalInequalNum, EvalInequalStr
